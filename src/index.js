@@ -28,20 +28,17 @@ function searchCountryByName(event) {
             timeout: 3000,
           }
         );
-        refs.countryList.innerHTML = '';
-        refs.countryInfo.innerHTML = '';
+        clearCountryList();
       } else if (data.length === 1) {
         //Виведення повідомлення про одну країну
         renderCountryInfo(data);
-        languagesList(...data);
       } else {
         //Виведення списку країн
         renderCountryList(data);
       }
     });
   } else {
-    refs.countryList.innerHTML = '';
-    refs.countryInfo.innerHTML = '';
+    clearCountryList();
   }
 }
 
@@ -78,4 +75,9 @@ function languagesList(country) {
   const lang = country.languages;
   const langList = lang.map(ln => ln.name).join(', ');
   return langList;
+}
+
+function clearCountryList() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 }
