@@ -20,23 +20,28 @@ function searchCountryByName(event) {
   const nameCountry = event.target.value.trim();
 
   if (nameCountry) {
-    fetchCountries(nameCountry).then(data => {
-      if (data.length > 10) {
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.',
-          {
-            timeout: 3000,
-          }
-        );
+    fetchCountries(nameCountry)
+      .then(data => {
+        if (data.length > 10) {
+          Notiflix.Notify.info(
+            'Too many matches found. Please enter a more specific name.',
+            {
+              timeout: 3000,
+            }
+          );
+          clearCountryList();
+        } else if (data.length === 1) {
+          //Виведення повідомлення про одну країну
+          renderCountryInfo(data);
+        } else {
+          //Виведення списку країн
+          renderCountryList(data);
+        }
+      })
+      .catch(error => {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
         clearCountryList();
-      } else if (data.length === 1) {
-        //Виведення повідомлення про одну країну
-        renderCountryInfo(data);
-      } else {
-        //Виведення списку країн
-        renderCountryList(data);
-      }
-    });
+      });
   } else {
     clearCountryList();
   }
